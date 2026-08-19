@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Центральный Банк | Логи Безопасности Шлюза</title>
+    <style>
+        :root {
+            --bg-dark: #070a13;
+            --panel-bg: #0f1424;
+            --border-glow: #ffaa00;
+            --text-glow: #ffaa00;
+            --text-muted: #6272a4;
+            --matrix-green: #50fa7b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #f8f8f2;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .bank-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.2);
+            padding: 25px;
+        }
+
+        .header {
+            border-bottom: 2px dashed var(--border-glow);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: var(--text-glow);
+            margin: 0;
+            font-size: 22px;
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+        }
+
+        .system-status {
+            font-size: 13px;
+            color: var(--matrix-green);
+            margin-top: 5px;
+        }
+
+        .log-section {
+            background: #000;
+            border: 1px solid #1c233a;
+            padding: 15px;
+            font-size: 13px;
+            color: #f1fa8c;
+            margin-bottom: 25px;
+            overflow-x: auto;
+        }
+
+        .chat-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #ff5555;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .chat-title {
+            font-weight: bold;
+            color: #ff5555;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .operator { color: #8be9fd; font-weight: bold; }
+        .sec-officer { color: #ff79c6; font-weight: bold; }
+
+        /* Блок с аварийным паролем */
+        .password-panel {
+            background: #282a36;
+            border: 1px solid #44475a;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .pass-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .pass-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff5555;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px rgba(255, 85, 85, 0.4);
+        }
+
+        .copy-btn {
+            background: var(--text-glow);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #ffb833;
+        }
+
+        .copy-btn.done {
+            background: var(--matrix-green);
+            color: #000;
+            cursor: default;
+        }
+
+        .warning-footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 30px;
+            border-top: 1px solid #1c233a;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bank-container">
+        <div class="header">
+            <h1>ЦЕНТРАЛЬНЫЙ БАНК // СИСТЕМА ЭКСТРЕННОГО ДОСТУПА</h1>
+            <div class="system-status">● АВАРИЙНЫЙ РЕЖИМ ОТЛАДКИ АКТИВИРОВАН</div>
+        </div>
+
+        <div class="log-section">
+            [SYS_LOG] Инициализация бэкапа шлюза транзакций... OK<br>
+            [SYS_LOG] Порт 84.201.9.1 переведён в режим прослушивания логов...<br>
+            [WARNING] ВНИМАНИЕ: Обнаружена утечка конфигурационного пула в подсеть!<br>
+            [SYS_LOG] Сессия администратора #SEC-991 активна.
+        </div>
+
+        <div class="chat-box">
+            <div class="chat-title">ВНУТРЕННИЙ КАНАЛ СВЯЗИ (БЕЗОПАСНОСТЬ):</div>
+            <div class="message">
+                <span class="sec-officer">[Офицер Безопасности]:</span> Мы зафиксировали подозрительную активность в главном ядре. Кто-то пытается пробить файрвол шлюза. Срочно закройте порты!
+            </div>
+            <div class="message">
+                <span class="operator">[Системный Инженер]:</span> Я не могу полностью отключить сеть во время клиринга транзакций. Чтобы шлюз не упал от нагрузки, я временно активировал внутренний мастер-пароль экстренного восстановления контура.
+            </div>
+            <div class="message">
+                <span class="sec-officer">[Офицер Безопасности]:</span> Запиши его в защищённый журнал, чтобы дежурная смена могла вручную сбросить сессии, если начнётся полноценный взлом.
+            </div>
+        </div>
+
+        <p>Используйте этот мастер-пароль в терминале для обхода шифрования центрального шлюза:</p>
+
+        <!-- Блок с секретным кодом банка -->
+        <div class="password-panel">
+            <div>
+                <span class="pass-label">Аварийный мастер-пароль шлюза:</span>
+                <span class="pass-value" id="bank-token">CRYPT_X_9999</span>
+            </div>
+            <button class="copy-btn" id="copy-action" onclick="handleCopy()">СКОПИРОВАТЬ</button>
+        </div>
+
+        <div class="warning-footer">
+            ВНИМАНИЕ: Использование данного мастер-ключа фиксируется в глобальном реестре кибербезопасности. Несанкционированный доступ преследуется по закону.
+        </div>
+    </div>
+
+    <script>
+        function handleCopy() {
+            const token = document.getElementById('bank-token').innerText;
+            const button = document.getElementById('copy-action');
+
+            navigator.clipboard.writeText(token).then(() => {
+                button.innerText = "СКОПИРОВАНО!";
+                button.classList.add('done');
+                button.disabled = true;
+
+                setTimeout(() => {
+                    button.innerText = "СКОПИРОВАТЬ";
+                    button.classList.remove('done');
+                    button.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Ошибка при копировании: ', err);
+                alert('Пожалуйста, выделите и скопируйте код вручную.');
+            });
+        }
+    </script>
+</body>
+</html>
