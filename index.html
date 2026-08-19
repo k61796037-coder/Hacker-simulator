@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal OS v3.1</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #00ff33;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+            overflow: hidden;
+        }
+        #terminal {
+            width: 100%;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-bottom: 10px;
+        }
+        .text { text-shadow: 0 0 5px #00ff33; line-height: 1.4; }
+        .system-text { color: #00aaff; text-shadow: 0 0 5px #00aaff; }
+        .error-text { color: #ff3333; text-shadow: 0 0 5px #ff3333; }
+        .warning-text { color: #ffaa00; text-shadow: 0 0 5px #ffaa00; }
+        .success-text { color: #00ff66; text-shadow: 0 0 5px #00ff66; font-weight: bold; }
+        
+        #terminal a {
+            color: #ffff00;
+            text-shadow: 0 0 5px #ffff00;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #input-line { display: flex; align-items: center; }
+        #prompt { text-shadow: 0 0 5px #00ff33; margin-right: 10px; user-select: none; }
+        #cmd-input {
+            background: transparent;
+            border: none;
+            color: #00ff33;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            text-shadow: 0 0 5px #00ff33;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="terminal" class="text"></div>
+    <div id="input-line">
+        <span id="prompt">guest@cyber_net:~$</span>
+        <input type="text" id="cmd-input" autofocus autocomplete="off" spellcheck="false">
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const cmdInput = document.getElementById('cmd-input');
+
+        let gameState = {
+            money: 0,
+            scanned: false,
+            currentServer: null
+        };
+
+        // База данных серверов с обновленным балансом наград
+        const servers = {
+            simple: {
+                name: "Обычный блог (192.168.1.5)",
+                type: "auto",
+                reward: 50,
+                info: "Слабая защита. Взламывается автоматически через команду 'crack'."
+            },
+            node: {
+                name: "Сервер Корпорации Node (10.0.2.55)",
+                type: "password",
+                correctPassword: "NODE_SECRET_2026",
+                reward: 200,
+                info: "Требуется пароль администратора. Ищите утечки в сети.",
+                link: "leak_node.html"
+            },
+            bank: {
+                name: "Шлюз Центрального Банка (84.201.9.1)",
+                type: "password",
+                correctPassword: "CRYPT_X_9999",
+                reward: 500, // Изменено по вашему запросу
+                info: "Высшая степень защиты. Требуется аварийный мастер-пароль.",
+                link: "leak_bank.html"
+            }
+        };
+
+        printText("Добро пожаловать в Terminal OS v3.1...", "system-text");
+        printText("Введите 'help' для вывода списка доступных команд.\n");
+
+        function printText(text, className = "") {
+            const line = document.createElement('div');
+            if (className) line.classList.add(className);
+            line.textContent = text;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function printLinkText(text, linkLabel, url, className = "") {
+            const line = document.createElement('div');
+            if (className) line.classList.add(className);
+            line.appendChild(document.createTextNode(text + " "));
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.target = "_blank";
+            a.textContent = linkLabel;
+            
+            line.appendChild(a);
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        cmdInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const input = cmdInput.value.trim();
+                cmdInput.value = '';
+
+                if (input) {
+                    printText(`guest@cyber_net:~$ ${input}`);
+                    
+                    const parts = input.split(' ');
+                    const cmd = parts[0].toLowerCase();
+                    const arg = parts.length > 1 ? parts.slice(1).join(' ') : '';
+                    
+                    processCommand(cmd, arg);
+                }
+            }
+        });
+
+        function processCommand(cmd, arg) {
+            switch(cmd) {
+                case 'help':
+                    printText("Доступные команды:");
+                    printText("  help                  - показать это сообщение");
+                    printText("  clear                 - очистить экран");
+                    printText("  scan                  - искать доступные цели в сети");
+                    printText("  target [имя]          - выбрать цель для атаки (simple, node, bank)");
+                    printText("  crack                 - взломать автоматическую цель");
+                    printText("  crack [пароль]        - взломать защищенную цель с помощью пароля");
+                    printText("  status                - проверить ваш баланс и текущую цель");
+                    break;
+
+                case 'clear':
+                    terminal.innerHTML = '';
+                    break;
+
+                case 'scan':
+                    printText("Сканирование глобальной сети...", "system-text");
+                    setTimeout(() => {
+                        printText("\n--- НАЙДЕНЫ ДОСТУПНЫЕ ЦЕЛИ ---", "warning-text");
+                        printText(`1. [simple] -> ${servers.simple.name} | Награда: ${servers.simple.reward}$`);
+                        printText(`2. [node]   -> ${servers.node.name} | Награда: ${servers.node.reward}$`);
+                        printText(`3. [bank]   -> ${servers.bank.name} | Награда: ${servers.bank.reward}$`);
+                        printText("\nИспользуйте команду 'target [имя]', чтобы выбрать узел (например: target simple).");
+                        gameState.scanned = true;
+                    }, 1000);
+                    break;
+
+                case 'target':
+                    if (!gameState.scanned) {
+                        printText("[ОШИБКА] Сначала запустите глобальный 'scan'.", "error-text");
+                        break;
+                    }
+                    if (!arg || !servers[arg]) {
+                        printText("[ОШИБКА] Укажите верное имя цели: simple, node или bank.", "error-text");
+                        break;
+                    }
+                    
+                    gameState.currentServer = servers[arg];
+                    printText(`\nЦель успешно изменена на: ${gameState.currentServer.name}`, "success-text");
+                    printText(`Информация: ${gameState.currentServer.info}`);
+                    
+                    if (gameState.currentServer.link) {
+                        printLinkText("Перехвачен внешний канал связи:", "[ОТКРЫТЬ САЙТ С УТЕЧКОЙ]", gameState.currentServer.link, "warning-text");
+                    }
+                    break;
+
+                case 'crack':
+                    if (!gameState.currentServer) {
+                        printText("[ОШИБКА] Цель не выбрана. Используйте 'target [имя]'.", "error-text");
+                        break;
+                    }
+
+                    if (gameState.currentServer.type === "auto") {
+                        printText("Запуск автоматического эксплоита...", "system-text");
+                        setTimeout(() => {
+                            printText(`[УСПЕХ] Сервер взломан! Получено: +${gameState.currentServer.reward}$`, "success-text");
+                            gameState.money += gameState.currentServer.reward;
+                            gameState.currentServer = null;
+                        }, 1500);
+                    } 
+                    else if (gameState.currentServer.type === "password") {
+                        if (!arg) {
+                            printText("[ОШИБКА] Этот сервер требует ввода пароля. Формат: crack [пароль]", "error-text");
+                            break;
+                        }
+
+                        printText(`Проверка пароля на сервере...`, "system-text");
+                        
+                        setTimeout(() => {
+                            if (arg === gameState.currentServer.correctPassword) {
+                                printText(`[ДОСТУП ПРЕДОСТАВЛЕН] Система взломана! На счет переведено: +${gameState.currentServer.reward}$`, "success-text");
+                                gameState.money += gameState.currentServer.reward;
+                                gameState.currentServer = null;
+                            } else {
+                                printText("[ОШИБКА ВХОДА] Неверный пароль администратора. Доступ заблокирован.", "error-text");
+                            }
+                        }, 1000);
+                    }
+                    break;
+
+                case 'status':
+                    printText("--- ТЕКУЩИЙ СТАТУС ---");
+                    printText(`Счет в швейцарском банке: ${gameState.money}$`);
+                    printText(`Выбранная цель: ${gameState.currentServer ? gameState.currentServer.name : "Не выбрана"}`);
+                    break;
+
+                default:
+                    printText(`[ОШИБКА] Неизвестная команда '${cmd}'. Введите 'help'.`, "error-text");
+            }
+        }
+
+        document.addEventListener('click', () => cmdInput.focus());
+    </script>
+</body>
+</html>
+
+                    
+                
+                
+                
+                            
+                                
+                    
+                            
+                
+                                
+                
+                    
+
+
+
+
+                
+
+
+                    

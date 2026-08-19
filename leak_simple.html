@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Внутренний архив: Инцидент #992-B</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --panel-bg: #131a26;
+            --accent-color: #ff5555;
+            --text-color: #c5cbd3;
+            --neon-green: #00ff66;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .archive-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--panel-bg);
+            border: 1px solid #222f47;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 24px;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meta-info {
+            font-family: monospace;
+            font-size: 13px;
+            color: #6a778d;
+        }
+
+        .meta-info span {
+            color: var(--accent-color);
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .warning-box {
+            background: rgba(255, 85, 85, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .warning-box h3 {
+            margin: 0 0 5px 0;
+            color: var(--accent-color);
+            font-size: 16px;
+        }
+
+        /* Блок с паролем и кнопкой копирования */
+        .password-section {
+            background: #070a10;
+            border: 1px dashed #384a66;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .password-info {
+            font-family: monospace;
+        }
+
+        .password-info label {
+            display: block;
+            font-size: 11px;
+            color: #6a778d;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .password-value {
+            font-size: 20px;
+            color: var(--neon-green);
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+        }
+
+        .copy-btn {
+            background: #1d293d;
+            border: 1px solid #384a66;
+            color: #fff;
+            padding: 10px 20px;
+            font-family: monospace;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--neon-green);
+            color: #000;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+        }
+
+        .copy-btn.copied {
+            background: #384a66;
+            color: #8fa0ba;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        .footer-note {
+            font-style: italic;
+            font-size: 13px;
+            color: #536175;
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid #222f47;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="archive-container">
+        <div class="header">
+            <h1>ДЕПАРТАМЕНТ КИБЕРБЕЗОПАСНОСТИ ЦЕНТРОБАНКА</h1>
+            <div class="meta-info">
+                ДОКУМЕНТ: #СБ-2026-992-B | СТАТУС: <span>РАССЕКРЕЧЕНО (УТЕЧКА)</span> | ДОСТУП: LEVEL 4
+            </div>
+        </div>
+
+        <p>
+            <strong>АННОТАЦИЯ К ИНЦИДЕНТУ:</strong> В ходе планового аудита сетевой инфраструктуры шлюза транзакций (внешний IP: 84.201.9.1) был обнаружен критический сбой в работе главного брандмауэра. Похоже, один из ведущих инженеров субподрядной организации оставил активным отладочный шлюз для удаленного тестирования из дома. Данный канал связи использовался для симуляции высоконагруженных переводов между резервными фондами.
+        </p>
+
+        <p>
+            Согласно внутренним регламентам, все тестовые сессии должны автоматически уничтожаться по истечении 24 часов. Однако из-за ошибки в скрипте деплоя корневой суперпароль остался жестко прописан в конфигурационных файлах подсистемы ядра. Логи показывают, что этот адрес уже сканировался неизвестными хостами из децентрализованных сетей.
+        </p>
+
+        <div class="warning-box">
+            <h3>ВНИМАНИЕ! КРИТИЧЕСКАЯ УЯЗВИМОСТЬ</h3>
+            Удаленный доступ к корневому терминалу шлюза временно открыт по протоколу авторизации через мастер-токен. Любое несанкционированное использование этого ключа приведет к полной компрометации транзакционного моста и прямой утечке резервных средств на анонимные счета.
+        </div>
+
+        <p>
+            Смена алгоритмов шифрования и полный сброс сессий назначены на следующие сутки. До этого момента системным администраторам предписано вручную отслеживать любые входящие запросы. Ниже приведена актуальная сигнатура аварийного административного ключа, извлеченная из дампа памяти.
+        </p>
+
+        <!-- Секция с ключом и кнопкой -->
+        <div class="password-section">
+            <div class="password-info">
+                <label>Аварийный мастер-пароль (Ключ авторизации):</label>
+                <div class="password-value" id="target-pwd">CRYPT_X_9999</div>
+            </div>
+            <button class="copy-btn" id="copy-button" onclick="copyPassword()">СКОПИРОВАТЬ</button>
+        </div>
+
+        <p>
+            <em>Инструкция по ликвидации:</em> В случае необходимости экстренного входа в консоль управления сетью, используйте стандартную команду обхода защитного периметра вместе с данным токеном авторизации. Вся ответственность за использование мастер-ключа ложится на дежурного офицера безопасности.
+        </p>
+
+        <div class="footer-note">
+            Сгенерировано автоматической системой логирования CyberOS. Копирование и распространение за пределами защищенного контура карается статьей 272 УК РФ.
+        </div>
+    </div>
+
+    <script>
+        function copyPassword() {
+            // Получаем текст пароля
+            const passwordText = document.getElementById('target-pwd').innerText;
+            const button = document.getElementById('copy-button');
+
+            // Копируем в буфер обмена
+            navigator.clipboard.writeText(passwordText).then(() => {
+                // Визуальный эффект успешного копирования
+                button.innerText = "СКОПИРОВАНО!";
+                button.classList.add('copied');
+                button.disabled = true;
+
+                // Возвращаем кнопку в исходное состояние через 2 секунды
+                setTimeout(() => {
+                    button.innerText = "СКОПИРОВАТЬ";
+                    button.classList.remove('copied');
+                    button.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Ошибка при копировании: ', err);
+                alert('Не удалось скопировать автоматически. Пожалуйста, выделите текст вручную.');
+            });
+        }
+    </script>
+</body>
+</html>
+
